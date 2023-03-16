@@ -3,12 +3,12 @@ entries:
   mychart-first:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-16T23:37:41.334916+08:00"
+    created: "2023-03-16T23:50:52.94745+08:00"
     description: A Helm chart for Kubernetes
     digest: b81b9e0cd190fad07fded3c70a70d54d9b72ab1a550c4005db0373a971896c9d
     name: mychart-first
     type: application
     urls:
-    - https://github.com/e-naval/myfirsthelm/mychart-first-0.1.0.tgz
+    - https://e-naval.github.io/myfirsthelm/mychart-first-0.1.0.tgz
     version: 0.1.0
-generated: "2023-03-16T23:37:41.331678+08:00"
+generated: "2023-03-16T23:50:52.944877+08:00"
