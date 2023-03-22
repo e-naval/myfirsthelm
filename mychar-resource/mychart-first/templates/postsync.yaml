@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jenkins
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+spec:
+  template:
+    spec:
+      containers:
+      - name: jenkins-trigger
+        image: curlimages/curl
+        env:
+          - name: username
+            valueFrom:
+              secretKeyRef:
+                name: jenkins-secret
+                key: username
+          - name: password
+            valueFrom:
+              secretKeyRef:
+                name: jenkins-secret
+                key: password
+        args:
+          - /bin/sh
+          - -ec
+          - "curl -k -vvv -u ${username}:${password} https://jenkins.mobility.prd.aws.asurion.net/job/HorizonReleaseManagement/job/test-job/build?token=testjob"
+      restartPolicy: Never
+  backoffLimit: 0
