@@ -3,7 +3,17 @@ entries:
   mychart-first:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T13:29:50.534663+08:00"
+    created: "2023-03-24T13:36:20.45589+08:00"
+    description: A Helm chart for Kubernetes
+    digest: a8048e51be981b084211e9091ed67e7a3e1b63747e0517cdfeeff704024fb3da
+    name: mychart-first
+    type: application
+    urls:
+    - https://e-naval.github.io/myfirsthelm/mychart-first-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-03-24T13:36:20.454975+08:00"
     description: A Helm chart for Kubernetes
     digest: ce6199dbf9b0fa1ed83d6b78063f67abac9adb046706de351028e431548e8203
     name: mychart-first
@@ -13,7 +23,7 @@ entries:
     version: 0.1.5
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T13:29:50.533989+08:00"
+    created: "2023-03-24T13:36:20.454492+08:00"
     description: A Helm chart for Kubernetes
     digest: 341fc99b5ba16115ff59fd2d9b716f0d409a6a40b2ba8088db0be2f97e490fd2
     name: mychart-first
@@ -23,7 +33,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T13:29:50.533518+08:00"
+    created: "2023-03-24T13:36:20.453986+08:00"
     description: A Helm chart for Kubernetes
     digest: 1bd5df2679aa47319ef9ac719f566783aae443de2c87037415a0dd2141cac155
     name: mychart-first
@@ -33,7 +43,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T13:29:50.533011+08:00"
+    created: "2023-03-24T13:36:20.453452+08:00"
     description: A Helm chart for Kubernetes
     digest: 2d2bdbfb6e383d6b7124d7d6d546fc7b69d35bebd7363c3d25d7eddff3454dda
     name: mychart-first
@@ -43,7 +53,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T13:29:50.53554+08:00"
+    created: "2023-03-24T13:36:20.456485+08:00"
     description: A Helm chart for Kubernetes
     digest: b81b9e0cd190fad07fded3c70a70d54d9b72ab1a550c4005db0373a971896c9d
     name: mychart-first
@@ -51,4 +61,4 @@ entries:
     urls:
     - https://e-naval.github.io/myfirsthelm/mychart-first-4c96af2.tgz
     version: 0.1.0
-generated: "2023-03-24T13:29:50.530282+08:00"
+generated: "2023-03-24T13:36:20.451059+08:00"

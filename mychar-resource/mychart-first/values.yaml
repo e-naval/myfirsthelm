@@ -36,6 +36,8 @@ service:
   type: NodePort
   port: 80
 
+jenkins:
+
 ingress:
   enabled: false
   annotations: {}

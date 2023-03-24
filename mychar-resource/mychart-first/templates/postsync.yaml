@@ -24,6 +24,6 @@ spec:
         args:
           - /bin/sh
           - -ec
-          - "curl -k -vvv -u ${username}:${password} https://jenkins.mobility.prd.aws.asurion.net/job/HorizonReleaseManagement/job/test-job/build?token=testjob"
+          - "curl -k -vvv -u ${username}:${password} {{ .Values.jenkins }}"
       restartPolicy: Never
   backoffLimit: 0
