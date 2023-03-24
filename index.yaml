@@ -3,9 +3,9 @@ entries:
   mychart-first:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T11:34:11.215535+08:00"
+    created: "2023-03-24T13:14:40.080936+08:00"
     description: A Helm chart for Kubernetes
-    digest: 85c9f2d736d54f02466f5d5e9d9757ca9d9fcdf956c1a7012224e1ca476484a8
+    digest: 246ed70baaf46edbbcf94500b8428cd515702034efa99ea6bdcf0644c5ae160d
     name: mychart-first
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T11:34:11.214882+08:00"
+    created: "2023-03-24T13:14:40.079571+08:00"
     description: A Helm chart for Kubernetes
     digest: 1bd5df2679aa47319ef9ac719f566783aae443de2c87037415a0dd2141cac155
     name: mychart-first
@@ -23,7 +23,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T11:34:11.210751+08:00"
+    created: "2023-03-24T13:14:40.071291+08:00"
     description: A Helm chart for Kubernetes
     digest: 2d2bdbfb6e383d6b7124d7d6d546fc7b69d35bebd7363c3d25d7eddff3454dda
     name: mychart-first
@@ -33,7 +33,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-03-24T11:34:11.219207+08:00"
+    created: "2023-03-24T13:14:40.089494+08:00"
     description: A Helm chart for Kubernetes
     digest: b81b9e0cd190fad07fded3c70a70d54d9b72ab1a550c4005db0373a971896c9d
     name: mychart-first
@@ -41,4 +41,4 @@ entries:
     urls:
     - https://e-naval.github.io/myfirsthelm/mychart-first-4c96af2.tgz
     version: 0.1.0
-generated: "2023-03-24T11:34:11.19841+08:00"
+generated: "2023-03-24T13:14:40.060088+08:00"

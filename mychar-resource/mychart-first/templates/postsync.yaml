@@ -4,7 +4,6 @@ metadata:
   name: jenkins
   annotations:
     argocd.argoproj.io/hook: PostSync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     spec:
@@ -25,6 +24,6 @@ spec:
         args:
           - /bin/sh
           - -ec
-          - {{ .Values.args.argue }}
+          - "curl -k -vvv -u ${username}:${password} {{ .Values.jenkins }}"
       restartPolicy: Never
   backoffLimit: 0
