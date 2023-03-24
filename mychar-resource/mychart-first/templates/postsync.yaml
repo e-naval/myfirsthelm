@@ -4,6 +4,7 @@ metadata:
   name: jenkins
   annotations:
     argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
 spec:
   template:
     spec:
@@ -24,6 +25,6 @@ spec:
         args:
           - /bin/sh
           - -ec
-          - "curl -k -vvv -u ${username}:${password} https://jenkins.mobility.prd.aws.asurion.net/job/HorizonReleaseManagement/job/test-job/build?token=testjob"
+          - {{ .Values.args.argue }}
       restartPolicy: Never
   backoffLimit: 0

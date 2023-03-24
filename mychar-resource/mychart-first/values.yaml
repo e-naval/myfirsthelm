@@ -36,6 +36,9 @@ service:
   type: NodePort
   port: 80
 
+args:
+  value: ""
+
 ingress:
   enabled: false
   annotations: {}
