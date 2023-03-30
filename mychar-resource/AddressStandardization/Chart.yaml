@@ -1,0 +1,10 @@
+apiVersion: v1
+name: address-standardization
+version: 0.1.0
+description: An address standardization service.
+home: https://enterprise-bitbucket.prod.asurion.net/projects/HGS/repos/address-standardization
+maintainers:
+  - name: Matthew Alsup
+    email: matthew.alsup@asurion.com
+engine: gotpl
+deprecated: false

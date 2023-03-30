@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}"
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name }}
+    {{- if .Values.namePrefix }}
+    feature: {{ trimSuffix "-" .Values.namePrefix }}
+    {{- end}}
+  annotations:
+    kubernetes.io/ingress.class: modo-nginx
+    {{- if .Values.ingress }}
+    nginx.ingress.kubernetes.io/backend-protocol: {{ .Values.ingress }}
+    {{- end }}
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.name }}-{{ .Values.env }}.fraud-tech.{{ .Values.hostedZone }}"
+spec:
+  rules:
+  - host: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}.fraud-tech.{{ .Values.hostedZone }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}"
+          servicePort: {{.Values.appPort}}
+  tls:
+  - hosts:
+    - "{{ .Values.name }}-{{ .Values.env }}.fraud-tech.{{ .Values.hostedZone }}"
+    secretName: "{{ .Values.name }}-{{ .Values.env }}-https"  

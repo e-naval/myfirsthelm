@@ -1,0 +1,21 @@
+{{- if eq .Values.defaultRole .Values.role }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    app: {{ .Values.name }}
+    {{- if .Values.namePrefix }}
+    feature: {{ trimSuffix "-" .Values.namePrefix }}
+    {{- end}}
+  name: {{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.defaultRole }}
+  namespace: {{ .Release.Namespace | quote }}
+spec:
+  selector:
+    matchLabels:
+      role: {{ .Values.defaultRole }}
+      app: {{ .Values.name }}
+      {{- if .Values.namePrefix }}
+      feature: {{ trimSuffix "-" .Values.namePrefix }}
+      {{- end}}
+  minAvailable: {{ sub .Values.autoScale.minPods 1 }}
+{{- end}}

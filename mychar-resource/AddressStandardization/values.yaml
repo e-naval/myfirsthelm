@@ -1,0 +1,61 @@
+#Name to use for k8s resources
+name: address-standardization
+env: dev
+chart: ft-helm-micro-service
+namePrefix: ""
+role: primary
+defaultRole: primary
+
+image: docker.artifactory.entarch.prd.aws.asurion.net/cloudengineering/address-standardization:latest
+
+#Port service is listening on
+appPort: 3000
+metricsPort: 3001
+
+#If HTTPS to the backend is absolutely critical instead of terminating at the ingress pod
+#ingress: HTTPS
+
+hostedZone: ""
+certificateOwner: "AD+HQDOMAIN:0c6ab28cd75d3045a5faf78bd33df4f9"
+
+#number of pods min/max.  Note: Initial size is set to value of minPods
+#target CPU/Memory % to trigger a scaleup
+autoScale:
+  maxPods: 10
+  minPods: 4
+  targetCPU: 60
+  targetMemory: 75
+
+#nodeAffinity is used to ensure your pod is placed within a node that is resource optimized to match the needs of your service.
+#Possible choices are:
+#     cpu-optimized
+#     memory-optimized
+
+#nodeAffinity:
+
+#Resource requirements for service, cpu can be either listed as core count in decimal notation, or "m" value where 0.1 (cores) = 100m
+#requests is the ammount of resources your container claims when it is deployed
+#limits is the maximum amount of resources, within the k8s node, that your pod is allowed to consume
+
+## Pass extra environment variables to the container. All secrets and extraVars are set as environment variables within the container.
+##
+extraVars:
+  WORKER_COUNT: "2"
+  ADDR_STAND_GOOGLE_MAPS_ENABLED: "false"
+  ADDR_STAND_SMARTYSTREETS_ENABLED: "false"
+  LOG_LEVEL: "info"
+#
+#
+### secrets will be pulled by Jenkins based on the ssm_parameter_value provided and then set as the value within the secret
+#secrets:
+#  key: ssm_parameter_value
+#  key2: ssm_parameter_value2
+#
+
+resources:
+  requests:
+    cpu: 512m
+    memory: 1024Mi
+  limits:
+    cpu: 1024m
+    memory: 2048Mi

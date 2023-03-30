@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}{{- if .Values.role }}-{{ .Values.role }}{{- end}}"
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name }}
+    {{- if .Values.role }}
+    role: {{ .Values.role }}
+    {{- end}} 
+    {{- if .Values.namePrefix }}
+    feature: {{ trimSuffix "-" .Values.namePrefix }}
+    {{- end}}
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  replicas: {{ .Values.autoScale.minPods }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      {{- if .Values.role }}
+      role: {{ .Values.role }}
+      {{- end}} 
+      {{- if .Values.namePrefix }}
+      feature: {{ trimSuffix "-" .Values.namePrefix }}
+      {{- end}}
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "3001"
+        prometheus.io/scrape: "true"
+      labels:
+        app: {{ .Values.name }}
+        {{- if .Values.role }}
+        role: {{ .Values.role }}
+        {{- end}} 
+        {{- if .Values.namePrefix }}
+        feature: {{ trimSuffix "-" .Values.namePrefix }}
+        {{- end}}
+    spec:
+{{- if .Values.nodeAffinity }}    
+      tolerations:
+      - key: "dedicated"
+        operator: Equal
+        value:  "{{ .Values.nodeAffinity }}"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: dedicated
+                operator: In
+                values:
+                - {{ .Values.nodeAffinity }}
+{{- end }}      
+      containers:
+      - name: {{ .Values.name }}
+        image: "{{ .Values.image }}"
+        env:
+        - name: NEW_RELIC_APP_NAME
+          value: "{{ .Values.name }}-{{ .Values.env }}"
+        - name: NODE_ENV
+          value: "{{ .Values.env }}"
+        - name: ADDR_STAND_SMARTYSTREETS_AUTH_ID
+          valueFrom:
+            secretKeyRef:
+              name: address-standardization-smartystreets-credentials
+              key: ADDR_STAND_SMARTYSTREETS_AUTH_ID
+        - name: ADDR_STAND_SMARTYSTREETS_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: address-standardization-smartystreets-credentials
+              key: ADDR_STAND_SMARTYSTREETS_AUTH_TOKEN
+        - name: ADDR_STAND_GOOGLE_MAPS_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: address-standardization-google-credentials
+              key: ADDR_STAND_GOOGLE_MAPS_API_KEY
+        - name: NEW_RELIC_LICENSE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: address-standardization-newrelic-key
+              key: ADDR_STAND_NEWRELIC_KEY
+{{- if or $.Values.extraVars $.Values.secrets }}
+        envFrom:
+        {{- if .Values.extraVars }}
+        - configMapRef:
+            name: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}-config"
+        {{- end }}
+        {{- if .Values.secrets }}
+        - secretRef:
+            name: "{{ .Values.name }}-{{ .Values.env }}-secret"
+        {{- end }}
+{{- end }}
+        ports:
+        - containerPort: {{ .Values.appPort }}
+          name: https
+        resources: 
+          limits:
+            cpu: {{ .Values.resources.limits.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu }}
+            memory: {{ .Values.resources.limits.memory }}
+{{- if .Values.healthCheckProbe }}
+        livenessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: {{ .Values.healthCheckProbe.checkPath }}
+            port: {{ .Values.appPort }}
+            scheme: {{ .Values.healthCheckProbe.scheme }}
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 3
+        readinessProbe:
+          failureThreshold: 2
+          httpGet:
+            path: {{ .Values.healthCheckProbe.checkPath }}
+            port: {{ .Values.appPort }}
+            scheme: {{ .Values.healthCheckProbe.scheme }}
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 3
+{{- end }}     

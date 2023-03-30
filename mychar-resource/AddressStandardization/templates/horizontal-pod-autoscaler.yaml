@@ -1,0 +1,26 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}"
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name }}
+    {{- if .Values.namePrefix }}
+    feature: {{ trimSuffix "-" .Values.namePrefix }}
+    {{- end}}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}-{{ .Values.defaultRole }}"
+  maxReplicas: {{ .Values.autoScale.maxPods }}
+  minReplicas: {{ .Values.autoScale.minPods }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: {{ .Values.autoScale.targetCPU }}
+    - type: Resource
+      resource:
+        name: memory
+        targetAverageUtilization: {{ .Values.autoScale.targetMemory }}

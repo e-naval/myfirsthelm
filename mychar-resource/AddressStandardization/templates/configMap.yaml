@@ -1,0 +1,17 @@
+{{- if .Values.extraVars }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: {{ .Release.Namespace | quote }}
+  name: "{{ .Values.namePrefix }}{{ .Values.name }}-{{ .Values.env }}-config"
+  labels:
+    app: {{ .Values.name }}
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    {{- if .Values.namePrefix }}
+    feature: {{ trimSuffix "-" .Values.namePrefix }}
+    {{- end}}
+data:
+{{ toYaml .Values.extraVars | indent 2 }}
+{{- end }}
